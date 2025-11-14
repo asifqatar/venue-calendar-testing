@@ -455,6 +455,9 @@
                 if (!baseUrl) {
                     baseUrl = 'https://venue-calendar-123.vercel.app';
                 }
+                
+                // Remove trailing slash from baseUrl
+                baseUrl = baseUrl.replace(/\/$/, '');
 
                 // Initialize calendar
                 calendarInstance = lib.initVenueCalendar({
@@ -465,6 +468,9 @@
                     showViewOptions: showViewOptions,
                     showMonthSwitcher: showMonthSwitcher,
                     onEventClick: (event) => {
+                        console.log('Event clicked:', event);
+                        console.log('URL Pattern:', urlPattern);
+                        console.log('Base URL:', baseUrl);
                         
                         // Generate event detail URL
                         const eventUrl = getEventDetailUrl(event, {
@@ -474,12 +480,15 @@
                             organizationId: orgId
                         });
 
+                        console.log('Generated event URL:', eventUrl);
+
                         if (eventUrl) {
                             // Navigate to event details on the same page
                             console.log('Navigating to event URL:', eventUrl);
                             window.location.href = eventUrl;
                         } else {
                             // Fallback: show alert if URL generation fails
+                            console.error('Failed to generate event URL');
                             alert(`Event: ${event.name || event.title || 'Unknown Event'}\nID: ${event.id || 'N/A'}`);
                         }
                     }
