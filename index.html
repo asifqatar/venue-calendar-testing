@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.2/dist/venue-calendar.css"
+    />
+    <title>Venue Calendar - CDN Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .controls {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .controls h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .control-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .control-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-item label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        .control-item input,
+        .control-item select {
+            padding: 10px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .control-item input:focus,
+        .control-item select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button.secondary {
+            background: #6c757d;
+        }
+
+        button.secondary:hover {
+            background: #5a6268;
+        }
+
+        .calendar-section {
+            padding: 40px;
+        }
+
+        .calendar-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+
+        .test-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .test-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .test-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .test-card p {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .calendar-container {
+            min-height: 500px;
+            background: white;
+            border: 2px dashed #e9ecef;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .info-box strong {
+            color: #1976D2;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls,
+            .calendar-section {
+                padding: 20px;
+            }
+
+            .control-group {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎭 Venue Calendar Test</h1>
+            <p>Testing @getmicdrop/venue-calendar via CDN</p>
+        </div>
+
+        <div class="controls">
+            <h2>⚙️ Configuration</h2>
+            <div class="control-group">
+                <div class="control-item">
+                    <label for="venueId">Venue ID</label>
+                    <input type="text" id="venueId" value="1" placeholder="Enter venue ID">
+                </div>
+                <div class="control-item">
+                    <label for="view">View Mode</label>
+                    <select id="view">
+                        <option value="calendar" selected>Calendar</option>
+                        <option value="list">List</option>
+                        <option value="gallery">Gallery</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label for="showViewOptions">Show View Options</label>
+                    <select id="showViewOptions">
+                        <option value="true" selected>Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label for="showMonthSwitcher">Show Month Switcher</label>
+                    <select id="showMonthSwitcher">
+                        <option value="true" selected>Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label for="eventUrlPattern">Event URL Pattern</label>
+                    <select id="eventUrlPattern">
+                        <option value="path" selected>Path: /{id}/{slug}</option>
+                        <option value="query">Query: ?event_id=...&slug=...</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <label for="eventBaseUrl">Event Details Base URL</label>
+                    <input type="text" id="eventBaseUrl" value="" placeholder="Auto-detects localhost:5173 or current domain">
+                    <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 5px;">
+                        Leave empty to auto-detect. For localhost, defaults to http://localhost:5173
+                    </small>
+                </div>
+            </div>
+            <div class="button-group">
+                <button onclick="initCalendar()">🔄 Initialize Calendar</button>
+                <button onclick="destroyCalendar()" class="secondary">🗑️ Destroy Calendar</button>
+                <button onclick="testAutoMount()" class="secondary">✨ Test Auto-Mount</button>
+                <button onclick="testWebComponent()" class="secondary">🧩 Test Web Component</button>
+            </div>
+        </div>
+
+        <div class="calendar-section">
+            <h2>📅 Calendar Display</h2>
+            
+            <div class="info-box">
+                <strong>ℹ️ Status:</strong> <span id="status" class="status info">Ready to initialize</span>
+                <br>
+                <strong>📦 Package:</strong> @getmicdrop/venue-calendar@1.1.2
+                <br>
+                <strong>🔗 CDN:</strong> jsDelivr
+            </div>
+
+            <!-- Method 1: JavaScript API -->
+            <div id="calendar-container" class="calendar-container">
+                <p style="text-align: center; color: #999; padding: 50px;">
+                    Calendar will appear here after initialization
+                </p>
+            </div>
+
+            <!-- Method 2: Auto-Mount Container (hidden by default) -->
+            <div id="auto-mount-container" class="calendar-container" style="display: none;">
+                <p style="text-align: center; color: #999; padding: 50px;">
+                    Auto-mount container (hidden)
+                </p>
+            </div>
+
+            <!-- Method 3: Web Component (hidden by default) -->
+            <div id="web-component-container" style="display: none;">
+                <div class="calendar-container">
+                    <p style="text-align: center; color: #999; padding: 50px;">
+                        Web component container (hidden)
+                    </p>
+                </div>
+            </div>
+
+            <div class="test-methods">
+                <div class="test-card">
+                    <h3>Method 1: JavaScript API</h3>
+                    <p>Use <code>initVenueCalendar()</code> function for full control. Best for React, Vue, or custom integrations.</p>
+                    <button onclick="initCalendar()" style="width: 100%; margin-top: 10px;">Try It</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>Method 2: Auto-Mount</h3>
+                    <p>Add <code>micdrop-calendar-container</code> class and the calendar auto-mounts. Easiest method!</p>
+                    <button onclick="testAutoMount()" style="width: 100%; margin-top: 10px;">Try It</button>
+                </div>
+
+                <div class="test-card">
+                    <h3>Method 3: Web Component</h3>
+                    <p>Use the custom <code>&lt;micdrop-calendar&gt;</code> HTML element. Modern and declarative.</p>
+                    <button onclick="testWebComponent()" style="width: 100%; margin-top: 10px;">Try It</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load the calendar library from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.2/dist/venue-calendar.iife.js"></script>
+
+    <script>
+        let calendarInstance = null;
+        let currentMethod = 'api';
+
+        // Helper function to generate slug from text
+        function generateSlug(text) {
+            if (!text) return "";
+            return text
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, "")
+                .replace(/\s+/g, "-")
+                .replace(/--+/g, "-")
+                .replace(/^-+|-+$/g, "");
+        }
+
+        // Helper function to generate event detail URL
+        function getEventDetailUrl(event, options = {}) {
+            const {
+                baseUrl = window.location.origin, // Default to current domain
+                urlPattern = 'path', // 'path' or 'query'
+                venueId = '',
+                organizationId = ''
+            } = options;
+
+            const eventId = event.id || event.ID || event.eventID;
+            const eventSlug = event.slug || generateSlug(event.name || event.title || 'event');
+            
+            if (!eventId) {
+                console.warn('Event ID not found, cannot generate URL');
+                return null;
+            }
+
+            if (urlPattern === 'path') {
+                // Pattern: /{eventId}/{slug}
+                // Example: /1/test-comedy-show
+                return `${baseUrl}/${eventId}/${eventSlug}`;
+            } else {
+                // Pattern: ?event_id={id}&slug={slug}&subroute=details
+                // Example: ?event_id=1&slug=test-comedy-show&subroute=details
+                const params = new URLSearchParams();
+                params.set('event_id', eventId);
+                params.set('slug', eventSlug);
+                params.set('subroute', 'details');
+                if (venueId) params.set('venueId', venueId);
+                if (organizationId) params.set('orgId', organizationId);
+                return `${baseUrl}/?${params.toString()}`;
+            }
+        }
+
+        // Helper function to get the library functions
+        function getLibraryFunctions() {
+            // Try different ways the library might be exposed
+            if (typeof VenueCalendar !== 'undefined') {
+                // IIFE format exposes as VenueCalendar object
+                return {
+                    initVenueCalendar: VenueCalendar.initVenueCalendar || VenueCalendar.default?.initVenueCalendar,
+                    autoMount: VenueCalendar.autoMount || VenueCalendar.default?.autoMount,
+                    VenueCalendar: VenueCalendar.VenueCalendar || VenueCalendar.default?.VenueCalendar
+                };
+            } else if (typeof initVenueCalendar !== 'undefined') {
+                // Direct global functions
+                return {
+                    initVenueCalendar: initVenueCalendar,
+                    autoMount: typeof autoMount !== 'undefined' ? autoMount : null,
+                    VenueCalendar: typeof VenueCalendar !== 'undefined' ? VenueCalendar : null
+                };
+            }
+            return null;
+        }
+
+        // Update status
+        function updateStatus(message, type = 'info') {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = message;
+            statusEl.className = `status ${type}`;
+        }
+
+        // Initialize calendar using JavaScript API
+        function initCalendar() {
+            try {
+                // Destroy existing instance
+                if (calendarInstance && calendarInstance.$destroy) {
+                    calendarInstance.$destroy();
+                }
+
+                // Hide other containers
+                document.getElementById('auto-mount-container').style.display = 'none';
+                document.getElementById('web-component-container').style.display = 'none';
+                document.getElementById('calendar-container').style.display = 'block';
+
+                // Clear container
+                const container = document.getElementById('calendar-container');
+                container.innerHTML = '';
+
+                // Get configuration
+                const venueId = document.getElementById('venueId').value;
+                const view = document.getElementById('view').value;
+                const showViewOptions = document.getElementById('showViewOptions').value === 'true';
+                const showMonthSwitcher = document.getElementById('showMonthSwitcher').value === 'true';
+
+                // Get library functions
+                const lib = getLibraryFunctions();
+                if (!lib || !lib.initVenueCalendar) {
+                    updateStatus('❌ Library not loaded! Check CDN link.', 'error');
+                    console.error('Library functions:', lib);
+                    return;
+                }
+
+                // Get configuration for event URL
+                const orgId = document.getElementById('venueId').value;
+                const urlPattern = document.getElementById('eventUrlPattern').value;
+                let baseUrl = document.getElementById('eventBaseUrl').value;
+                
+                // Auto-detect localhost if baseUrl is empty
+                if (!baseUrl) {
+                    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                    baseUrl = isLocalhost 
+                        ? `http://localhost:5173` // Default SvelteKit dev server port - change if different
+                        : window.location.origin;
+                }
+
+                // Initialize calendar
+                calendarInstance = lib.initVenueCalendar({
+                    target: container,
+                    venueId: venueId,
+                    view: view,
+                    events: [],
+                    showViewOptions: showViewOptions,
+                    showMonthSwitcher: showMonthSwitcher,
+                    onEventClick: (event) => {
+                        
+                        // Generate event detail URL
+                        const eventUrl = getEventDetailUrl(event, {
+                            baseUrl: baseUrl,
+                            urlPattern: urlPattern,
+                            venueId: venueId,
+                            organizationId: orgId
+                        });
+
+                        if (eventUrl) {
+                            // Navigate to event details on the same page
+                            console.log('Navigating to event URL:', eventUrl);
+                            window.location.href = eventUrl;
+                        } else {
+                            // Fallback: show alert if URL generation fails
+                            alert(`Event: ${event.name || event.title || 'Unknown Event'}\nID: ${event.id || 'N/A'}`);
+                        }
+                    }
+                });
+
+                updateStatus('✅ Calendar initialized successfully!', 'success');
+                currentMethod = 'api';
+            } catch (error) {
+                console.error('Error initializing calendar:', error);
+                updateStatus('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Destroy calendar
+        function destroyCalendar() {
+            if (calendarInstance && calendarInstance.$destroy) {
+                calendarInstance.$destroy();
+                calendarInstance = null;
+                document.getElementById('calendar-container').innerHTML = 
+                    '<p style="text-align: center; color: #999; padding: 50px;">Calendar destroyed</p>';
+                updateStatus('🗑️ Calendar destroyed', 'info');
+            } else {
+                updateStatus('⚠️ No calendar instance to destroy', 'info');
+            }
+        }
+
+        // Test auto-mount method
+        function testAutoMount() {
+            try {
+                // Destroy existing instance
+                if (calendarInstance && calendarInstance.$destroy) {
+                    calendarInstance.$destroy();
+                }
+
+                // Hide other containers
+                document.getElementById('calendar-container').style.display = 'none';
+                document.getElementById('web-component-container').style.display = 'none';
+                const autoMountContainer = document.getElementById('auto-mount-container');
+                autoMountContainer.style.display = 'block';
+
+                // Clear and setup auto-mount container
+                autoMountContainer.innerHTML = '';
+                autoMountContainer.className = 'micdrop-calendar-container';
+                
+                // Get configuration
+                const venueId = document.getElementById('venueId').value;
+                const view = document.getElementById('view').value;
+                const showViewOptions = document.getElementById('showViewOptions').value;
+                const showMonthSwitcher = document.getElementById('showMonthSwitcher').value;
+
+                // Set data attributes
+                autoMountContainer.setAttribute('data-venue-id', venueId);
+                autoMountContainer.setAttribute('data-view', view);
+                autoMountContainer.setAttribute('data-show-view-options', showViewOptions);
+                autoMountContainer.setAttribute('data-show-month-switcher', showMonthSwitcher);
+                autoMountContainer.removeAttribute('data-micdrop-initialized'); // Reset
+
+                // Get library functions
+                const lib = getLibraryFunctions();
+                if (!lib) {
+                    updateStatus('❌ Library not loaded!', 'error');
+                    return;
+                }
+
+                // Trigger auto-mount
+                if (lib.autoMount) {
+                    lib.autoMount();
+                } else if (lib.initVenueCalendar) {
+                    // Manual initialization if autoMount not available
+                    calendarInstance = lib.initVenueCalendar({
+                        target: autoMountContainer,
+                        venueId: venueId,
+                        view: view,
+                        showViewOptions: showViewOptions === 'true',
+                        showMonthSwitcher: showMonthSwitcher === 'true',
+                    });
+                } else {
+                    updateStatus('❌ Library functions not available', 'error');
+                    return;
+                }
+
+                updateStatus('✅ Auto-mount initialized!', 'success');
+                currentMethod = 'auto-mount';
+            } catch (error) {
+                console.error('Error with auto-mount:', error);
+                updateStatus('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Test web component method
+        function testWebComponent() {
+            try {
+                // Destroy existing instance
+                if (calendarInstance && calendarInstance.$destroy) {
+                    calendarInstance.$destroy();
+                }
+
+                // Hide other containers
+                document.getElementById('calendar-container').style.display = 'none';
+                document.getElementById('auto-mount-container').style.display = 'none';
+                const webComponentContainer = document.getElementById('web-component-container');
+                webComponentContainer.style.display = 'block';
+
+                // Get configuration
+                const venueId = document.getElementById('venueId').value;
+                const view = document.getElementById('view').value;
+                const showViewOptions = document.getElementById('showViewOptions').value;
+                const showMonthSwitcher = document.getElementById('showMonthSwitcher').value;
+
+                // Create web component
+                webComponentContainer.innerHTML = `
+                    <micdrop-calendar 
+                        venue-id="${venueId}"
+                        view="${view}"
+                        show-view-options="${showViewOptions}"
+                        show-month-switcher="${showMonthSwitcher}">
+                    </micdrop-calendar>
+                `;
+
+                updateStatus('✅ Web component created!', 'success');
+                currentMethod = 'web-component';
+            } catch (error) {
+                console.error('Error with web component:', error);
+                updateStatus('❌ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const lib = getLibraryFunctions();
+            if (lib && lib.initVenueCalendar) {
+                updateStatus('📦 Library loaded from CDN', 'success');
+                console.log('Venue Calendar library loaded!');
+                console.log('Available functions:', {
+                    initVenueCalendar: !!lib.initVenueCalendar,
+                    autoMount: !!lib.autoMount,
+                    VenueCalendar: !!lib.VenueCalendar
+                });
+                console.log('VenueCalendar global:', typeof VenueCalendar !== 'undefined' ? VenueCalendar : 'undefined');
+            } else {
+                updateStatus('⚠️ Library loaded but functions not accessible', 'info');
+                console.warn('Library may not be loaded correctly');
+                console.log('VenueCalendar global:', typeof VenueCalendar !== 'undefined' ? VenueCalendar : 'undefined');
+                console.log('Direct functions:', {
+                    initVenueCalendar: typeof initVenueCalendar !== 'undefined',
+                    autoMount: typeof autoMount !== 'undefined'
+                });
+            }
+        });
+
+        // Log events
+        window.addEventListener('error', (e) => {
+            console.error('Page error:', e);
+            updateStatus('❌ Error: ' + e.message, 'error');
+        });
+    </script>
+</body>
+</html>
+
