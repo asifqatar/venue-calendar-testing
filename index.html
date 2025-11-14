@@ -483,9 +483,9 @@
                         console.log('Generated event URL:', eventUrl);
 
                         if (eventUrl) {
-                            // Navigate to event details on the same page
-                            console.log('Navigating to event URL:', eventUrl);
-                            window.location.href = eventUrl;
+                            // Open event details in a new tab
+                            console.log('Opening event URL in new tab:', eventUrl);
+                            window.open(eventUrl, '_blank');
                         } else {
                             // Fallback: show alert if URL generation fails
                             console.error('Failed to generate event URL');
