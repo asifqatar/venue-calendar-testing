@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.2/dist/venue-calendar.css"
+      href="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.1/dist/venue-calendar.css"
     />
     <title>Venue Calendar - CDN Test</title>
     <style>
@@ -258,15 +258,15 @@
                 <div class="control-item">
                     <label for="eventUrlPattern">Event URL Pattern</label>
                     <select id="eventUrlPattern">
-                        <option value="path">Path: /{id}/{slug}</option>
-                        <option value="query" selected>Query: ?event_id=...&slug=...</option>
+                        <option value="path" selected>Path: /{id}/{slug}</option>
+                        <option value="query">Query: ?event_id=...&slug=...</option>
                     </select>
                 </div>
                 <div class="control-item">
                     <label for="eventBaseUrl">Event Details Base URL</label>
-                    <input type="text" id="eventBaseUrl" value="" placeholder="Defaults to https://venue-calendar-123.vercel.app/">
+                    <input type="text" id="eventBaseUrl" value="" placeholder="Auto-detects localhost:5173 or current domain">
                     <small style="color: #666; font-size: 0.85rem; display: block; margin-top: 5px;">
-                        Leave empty to use https://venue-calendar-123.vercel.app/
+                        Leave empty to auto-detect. For localhost, defaults to http://localhost:5173
                     </small>
                 </div>
             </div>
@@ -335,7 +335,7 @@
     </div>
 
     <!-- Load the calendar library from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.2/dist/venue-calendar.iife.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@getmicdrop/venue-calendar@1.1.1/dist/venue-calendar.iife.js"></script>
 
     <script>
         let calendarInstance = null;
@@ -449,15 +449,15 @@
                 // Get configuration for event URL
                 const orgId = document.getElementById('venueId').value;
                 const urlPattern = document.getElementById('eventUrlPattern').value;
-                let baseUrl = document.getElementById('eventBaseUrl').value.trim();
+                let baseUrl = document.getElementById('eventBaseUrl').value;
                 
-                // Use default domain if baseUrl is empty
+                // Auto-detect localhost if baseUrl is empty
                 if (!baseUrl) {
-                    baseUrl = 'https://venue-calendar-123.vercel.app';
+                    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                    baseUrl = isLocalhost 
+                        ? `http://localhost:5173` // Default SvelteKit dev server port - change if different
+                        : window.location.origin;
                 }
-                
-                // Remove trailing slash from baseUrl
-                baseUrl = baseUrl.replace(/\/$/, '');
 
                 // Initialize calendar
                 calendarInstance = lib.initVenueCalendar({
@@ -468,9 +468,6 @@
                     showViewOptions: showViewOptions,
                     showMonthSwitcher: showMonthSwitcher,
                     onEventClick: (event) => {
-                        console.log('Event clicked:', event);
-                        console.log('URL Pattern:', urlPattern);
-                        console.log('Base URL:', baseUrl);
                         
                         // Generate event detail URL
                         const eventUrl = getEventDetailUrl(event, {
@@ -480,15 +477,12 @@
                             organizationId: orgId
                         });
 
-                        console.log('Generated event URL:', eventUrl);
-
                         if (eventUrl) {
-                            // Open event details in a new tab
-                            console.log('Opening event URL in new tab:', eventUrl);
+                            // Open event details in new tab
+                            console.log('Opening event URL:', eventUrl);
                             window.open(eventUrl, '_blank');
                         } else {
                             // Fallback: show alert if URL generation fails
-                            console.error('Failed to generate event URL');
                             alert(`Event: ${event.name || event.title || 'Unknown Event'}\nID: ${event.id || 'N/A'}`);
                         }
                     }
